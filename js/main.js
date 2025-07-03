@@ -103,44 +103,20 @@ function displayQuote() {
 }
 
 
-//const counters = document.querySelectorAll('.counter');
-//const speed = 200;
+//intersection observer for slide in effect
+const elementsToSlide = document.querySelectorAll('.section-a, .section-b');
 
-/*const counterContainer = document.querySelector('.counter-container');
-const options = {
-  root: null,
-  threshold: 0.3,
-  rootMargin: "-100px",
-}
-const theObserver = new IntersectionObserver(callbackFunction, options);
-theObserver.observe(counterContainer);
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      entry.target.classList.remove('hidden');
+    }
+  });
+}, {
+  threshold: 0.1
+});
 
-function callbackFunction(entries) {
-  const [entry] = entries;
-
-  if(entry.isIntersecting){
-    const counters = document.querySelectorAll('.counter');
-    const speed = 200;
-    counters.forEach((counter) => {
-      const updateCount = () => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const count = parseInt(counter.innerText);
-        const increment = Math.ceil(target / speed);
-    
-        if (count < target) {
-          counter.innerText = count + increment;
-          setTimeout(updateCount, 1);
-        } else {
-          count.innerText = target;
-        }
-    
-    
-      };
-    
-      updateCount();
-    });
-
-  }else{
-    return;
-  }
-}*/
+elementsToSlide.forEach(el => {
+  observer.observe(el);
+});
